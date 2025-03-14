@@ -196,13 +196,22 @@ int main(void)
     std::vector<T> tripletList;
     tripletList.reserve(sizeof(a));
 
+    printf("\nsizeof a: " "%d", sizeof(a));
+    printf("\nsizeof ia: " "%d", sizeof(ia));
+    printf("\nsizeof ja: " "%d", sizeof(ja));
+
+    // NOTE: Eigen format starts from zero
     for (size_t k = 0; k < sizeof(a); k++)
     {
         double a_ = a[k];
-        int i_ = ia[k];
-        int j_ = ja[k];
+        int ia_ = ia[k];
+        int ja_ = ja[k];
 
-        tripletList.push_back(T(i_, j_, a_));
+        printf("\na_: " "%d", a_);
+        printf("\ni_: " "%i", ia_);
+        printf("\nj_: " "%i", ja_);
+
+        tripletList.push_back(T(ia_, ja_, a_));
     }
 
     printf("After T\n");
