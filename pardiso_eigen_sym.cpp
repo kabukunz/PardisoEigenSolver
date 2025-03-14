@@ -191,33 +191,40 @@ int main(void)
     printf("Starting Eigen solver\n");
     printf("\n");
 
+    size_t NNZ = 18;
+    size_t as = NNZ;
+    size_t ias = NNZ / 2;
+    size_t jas = NNZ;
+    size_t bs = 8;
+    size_t xs = 8;
+
     // fill A
     typedef Eigen::Triplet<double> T;
     std::vector<T> tripletList;
-    tripletList.reserve(sizeof(a));
+    tripletList.reserve(as);
 
-    printf("\nsizeof a: " "%d", sizeof(a));
-    printf("\nsizeof ia: " "%d", sizeof(ia));
-    printf("\nsizeof ja: " "%d", sizeof(ja));
+    printf("\nsize of a: " "%d", as);
+    printf("\nsize of ia: " "%d", ias);
+    printf("\nsize of ja: " "%d", jas);
 
     // NOTE: Eigen format starts from zero
-    for (size_t k = 0; k < sizeof(a); k++)
+    for (size_t k = 0; k < as; k++)
     {
         double a_ = a[k];
-        int ia_ = ia[k];
-        int ja_ = ja[k];
+        int ia_ = ia[k] -1;
+        int ja_ = ja[k] -1;
 
-        printf("\na_: " "%d", a_);
-        printf("\ni_: " "%i", ia_);
-        printf("\nj_: " "%i", ja_);
+        printf("\na_ ia_ ja_: " "%f %d %d", a_, ia_, ja_);
+        // printf("\ni_: " "%d", ia_);
+        // printf("\nj_: " "%d", ja_);
 
         tripletList.push_back(T(ia_, ja_, a_));
     }
 
-    printf("After T\n");
+    printf("\nAfter T");
 
     Eigen::SparseMatrix<double> A;
-    A.resize(sizeof(ia), sizeof(ja));
+    A.resize(ias, jas);
     A.setFromTriplets(tripletList.begin(), tripletList.end());
     A.makeCompressed();
 
@@ -225,8 +232,8 @@ int main(void)
 
     // fill b
     Eigen::VectorXd b_;
-    b_.resize(sizeof(b));
-    for (size_t i = 0; i < sizeof(b); i++)
+    b_.resize(bs);
+    for (size_t i = 0; i < bs; i++)
         b_(i) = b[i];
 
     // 
