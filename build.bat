@@ -8,6 +8,6 @@ del /Q /F build
 @REM build
 cmake -B build -G "Ninja" ^
 -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE ^
--DCMAKE_BUILD_TYPE=Release
+-DCMAKE_BUILD_TYPE=Debug
 
 ninja -C build
